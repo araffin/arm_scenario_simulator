@@ -40,9 +40,9 @@ class Environment:
             self.change_color()
         if msg.data == "change position":
             print "im here!"
-            self.del_objects()
-            self.init()
-            print "position should change"
+            # self.del_objects()
+            # self.init()
+            # print "position should change"
 
     def reset_callback(self, message):
         self.del_objects()
