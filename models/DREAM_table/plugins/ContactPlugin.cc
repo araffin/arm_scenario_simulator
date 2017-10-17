@@ -2,6 +2,8 @@
 
 #include <gazebo/physics/physics.hh>
 #include <boost/regex.hpp>
+#include <gazebo_plugins/gazebo_ros_utils.h>
+
 
 using namespace gazebo;
 
@@ -18,8 +20,9 @@ ContactPlugin::~ContactPlugin()
 ////////////////////////////////////////
 void ContactPlugin::Load(sensors::SensorPtr _sensor, sdf::ElementPtr /*_sdf*/)
 {
+  GAZEBO_SENSORS_USING_DYNAMIC_POINTER_CAST;
   // Get the parent sensor.
-  this->parentSensor = boost::dynamic_pointer_cast<sensors::ContactSensor>(_sensor);
+  this->parentSensor = dynamic_pointer_cast<sensors::ContactSensor>(_sensor);
 
     // Make sure the parent sensor is valid.
     if (!this->parentSensor)

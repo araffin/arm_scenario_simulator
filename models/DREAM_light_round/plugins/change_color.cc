@@ -1,4 +1,5 @@
 #include <boost/bind.hpp>
+#include <boost/regex.hpp>
 #include <stdio.h>
 #include <string>
 
