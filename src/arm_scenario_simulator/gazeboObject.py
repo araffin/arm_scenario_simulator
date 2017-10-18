@@ -1,10 +1,12 @@
 import os
-import rospy
 import rospkg
+
+import rospy
+
 rospack = rospkg.RosPack()
 
 from std_msgs.msg import ColorRGBA
-from geometry_msgs.msg import Pose, Point, Quaternion, Twist
+from geometry_msgs.msg import Pose, Twist
 from gazebo_msgs.srv import SpawnModel, DeleteModel, GetModelState, SetModelState
 from gazebo_msgs.msg import ModelState
 
@@ -92,11 +94,11 @@ class GazeboObject:
 
 
     def set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world"):
-        '''GazeboObject.set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world")
+        """GazeboObject.set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world")
 
         Set the state (pose + twist) of the objects according to the given reference_frame
         If an element is omitted, the current value is conserved.
-        '''
+        """
         message = ModelState(self.gazebo_name, Pose(position, orientation), Twist(linear_twist, angular_twist), reference_frame)
         if not(orientation and linear_twist and angular_twist):
             current_state = self.get_state(reference_frame)

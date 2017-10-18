@@ -1,14 +1,13 @@
 #!/usr/bin/env python
 
-import rospy
 import math
-import time
 
+import rospy
 import std_srvs.srv
 from baxter_core_msgs.msg import HeadPanCommand, HeadState
 
-class head_controller_simulator_fix:
 
+class head_controller_simulator_fix:
     def __init__(self):
         self._state = dict()
         self.target = 0.0
@@ -17,7 +16,7 @@ class head_controller_simulator_fix:
         rospy.Subscriber('/robot/head/head_state', HeadState, self._on_head_state)
         pub_pan = rospy.Publisher('/robot/head/command_head_pan', HeadPanCommand, queue_size=10)
 
-        eps = 0.01 #
+        eps = 0.01  #
         rate_frequency = 5
         rate = rospy.Rate(rate_frequency)
 
@@ -25,14 +24,13 @@ class head_controller_simulator_fix:
             rate.sleep()
             if 'pan' not in self._state.keys(): continue
 
-            diff = self.target-self._state['pan']
-            if abs(diff)>eps:
-                delta = math.copysign(self.speed/rate_frequency, diff)
-                if abs(delta)>abs(diff): delta = diff
-                coeff = 3 if abs(diff)>3*abs(delta) else (2 if abs(diff)>2*abs(delta) else 1)
-                target = self._state['pan']+ coeff*delta
-                pub_pan.publish( HeadPanCommand(target, 0, True) )
-
+            diff = self.target - self._state['pan']
+            if abs(diff) > eps:
+                delta = math.copysign(self.speed / rate_frequency, diff)
+                if abs(delta) > abs(diff): delta = diff
+                coeff = 3 if abs(diff) > 3 * abs(delta) else (2 if abs(diff) > 2 * abs(delta) else 1)
+                target = self._state['pan'] + coeff * delta
+                pub_pan.publish(HeadPanCommand(target, 0, True))
 
     def _on_pan_cmd(self, msg):
         self.target = msg.target
@@ -48,8 +46,8 @@ if __name__ == '__main__':
     try:
         rospy.loginfo('Starting head_controler_fix node')
         rospy.init_node('head_controler_fix')
-        
-        rospy.Service('/head_controller_simulator_fix', std_srvs.srv.Empty, lambda request:[])
+
+        rospy.Service('/head_controller_simulator_fix', std_srvs.srv.Empty, lambda request: [])
         controler = head_controller_simulator_fix()
     except rospy.ROSInterruptException:
         pass
