@@ -50,7 +50,10 @@ namespace gazebo
     {
       int8_t value(0);
       gazebo::math::Vector3 angles = this->model->GetLink("lever")->GetRelativePose().rot.GetAsEuler();
-      if (angles.x>0){value=1;}
+      if(angles.x > 0)
+      {
+        value=1;
+      }
 
       msgs::Int message; //gazebo message
       message.set_data(value);

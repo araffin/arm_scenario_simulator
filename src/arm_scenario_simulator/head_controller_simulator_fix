@@ -22,12 +22,14 @@ class head_controller_simulator_fix:
 
         while not rospy.is_shutdown():
             rate.sleep()
-            if 'pan' not in self._state.keys(): continue
+            if 'pan' not in self._state.keys():
+                continue
 
             diff = self.target - self._state['pan']
             if abs(diff) > eps:
                 delta = math.copysign(self.speed / rate_frequency, diff)
-                if abs(delta) > abs(diff): delta = diff
+                if abs(delta) > abs(diff):
+                    delta = diff
                 coeff = 3 if abs(diff) > 3 * abs(delta) else (2 if abs(diff) > 2 * abs(delta) else 1)
                 target = self._state['pan'] + coeff * delta
                 pub_pan.publish(HeadPanCommand(target, 0, True))

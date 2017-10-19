@@ -1,8 +1,4 @@
-import rospy
 from .gazeboObject import GazeboObject
-from std_msgs.msg import ColorRGBA, Int8
-from arm_scenario_simulator.msg import MaterialColor, Int8Stamped
-from .parameters import COLOR_TYPE
 
 
 class Table(GazeboObject):

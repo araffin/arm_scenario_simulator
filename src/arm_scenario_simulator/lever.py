@@ -1,6 +1,7 @@
 import rospy
+from arm_scenario_simulator.msg import Int8Stamped
+
 from .gazeboObject import GazeboObject
-from arm_scenario_simulator.msg import MaterialColor, Int8Stamped
 
 
 class Lever(GazeboObject):

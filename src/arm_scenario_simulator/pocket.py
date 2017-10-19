@@ -14,7 +14,8 @@ class Pocket(GazeboObject):
     def update_state(self, message):
         self._active = message.data == 1 or (
             (self._active is True) and rospy.get_time() < self._last_time_active + self._off_delay)
-        if message.data == 1: self._last_time_active = rospy.get_time()
+        if message.data == 1:
+            self._last_time_active = rospy.get_time()
 
     def is_active(self):
         return self._active
