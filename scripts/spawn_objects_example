@@ -4,15 +4,16 @@ import math
 import random
 import subprocess
 
-import arm_scenario_simulator as arm_sim
 import rospy
-from baxter_interface import Limb
 from geometry_msgs.msg import Point, Quaternion
 from std_msgs.msg import Empty
 from std_msgs.msg import String
 
-subprocess.call(['rosrun', 'baxter_tools', 'enable_robot.py', '-e'])
+import baxter_interface
+from baxter_interface import CHECK_VERSION
+from baxter_interface import Limb
 
+import arm_scenario_simulator as arm_sim
 
 def axis_to_quat(axis, angle):
     sin = math.sin(angle / 2)
@@ -175,6 +176,11 @@ class Environment:
 
 def main():
     rospy.init_node("DREAM_environment_demo")
+    # Enable Robot
+    rs = baxter_interface.RobotEnable(CHECK_VERSION)
+    print("Previous state: {}".format(rs.state()))
+    rs.enable()
+    print("Robot enabled")
     env = Environment()
     try:
         env.init()
