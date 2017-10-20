@@ -27,7 +27,9 @@ namespace gazebo
     }
 
     // Called by the world update start event
-    public: void OnUpdate(const common::UpdateInfo & /*_info*/){
+    public: void OnUpdate(const common::UpdateInfo & /*_info*/)
+    {
+      // Apply a force of 2 on the axis 0
       this->model->GetJoint("glider")->SetForce(0, 2);
     }
   };

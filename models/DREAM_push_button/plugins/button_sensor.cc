@@ -50,7 +50,11 @@ namespace gazebo
     {
       int8_t value(0);
       gazebo::math::Vector3 p = this->model->GetLink("button")->GetRelativePose().pos;
-      if (p.z<0.01){value=1;}
+      // Consider the button to be pressed if the relative position is under a threshold
+      if (p.z < 0.01)
+      {
+        value = 1;
+      }
 
       msgs::Int message;
       message.set_data(value);
