@@ -1,3 +1,5 @@
+**WARNING: this readme file is currently not up to date**
+
 # Introduction
 
 This package was made to allow people make developmental robotic experiment simulations in Gazebo, with Baxter or any other robots having an arm (necessary to interact with the world).
@@ -26,7 +28,7 @@ Every ROS node using Baxter should be run from a terminal in which the following
 
 Then you can launch your nodes. As an example :
 
-* The example environment can then be launched by executing ```roslaunch arm_scenario_simulator baxter_world.launch``` 
+* The example environment can then be launched by executing ```roslaunch arm_scenario_simulator baxter_world.launch```
 * Then some objects can be spawned on the table by executing ```rosrun arm_scenario_simulator spawn_objects_example``` resulting in something like this :
 
 ![gazebo.png](https://bitbucket.org/repo/GLdKKe/images/874311045-gazebo.png)
@@ -74,7 +76,7 @@ Please refer to rethink Robotics' [examples](https://github.com/RethinkRobotics/
 
 # Road map
 
-## Already done : 
+## Already done :
 * A table with a pocket and a sensor publishing (on a ROS topic) whether there is an object inside the pocket or not.
 * Models for interactive objects (buttons, levers) with sensors publishing the state on objects on both Gazebo and ROS topics.
 * Models for basic objects (cube and cylinder).
@@ -99,6 +101,6 @@ To my knowledge, it is possible to speed up the simulation of the physics engine
 
 Increasing the physics engine speeds do not speed up sensors: if you increase physics engine speed, the apparent update rate of sensors in the simulated world will be decreased, since the update rates defined in .sdf files are expressed w.r.t real time. Make sure your increase the sensors update rate if you want to keep the same apparent update rate.
 
-On my computer, the limiting factor seems to be the cameras. Indeed they seem to be not able to capture more than 30 frames per (real) second : increasing the update_rate in models/DREAM_baxter/urdf/baxter_base/baxter_base.gazebo.xacro over 30 does not make the rate of the topic /cameras/*_camera/image go higher. Therefore, after speeding up the physics engine by a factor 2, the apparent update rate of the camera is a little less than 15 - which is still correct. However, it seems that this maximum frame rate is divided by the number of open cameras. So if a second camera is recording, each camera should have frame rate of 15 at physics speed x1, and 7.5 at physics speed x2. 
+On my computer, the limiting factor seems to be the cameras. Indeed they seem to be not able to capture more than 30 frames per (real) second : increasing the update_rate in models/DREAM_baxter/urdf/baxter_base/baxter_base.gazebo.xacro over 30 does not make the rate of the topic /cameras/*_camera/image go higher. Therefore, after speeding up the physics engine by a factor 2, the apparent update rate of the camera is a little less than 15 - which is still correct. However, it seems that this maximum frame rate is divided by the number of open cameras. So if a second camera is recording, each camera should have frame rate of 15 at physics speed x1, and 7.5 at physics speed x2.
 
 Other sensors like buttons, levers and presence in table's pocket have a much higher (real) update rate (in fact it is ```real_time_update_rate```) so even if their apparent update rate is decrease when accelerating the physics, this should not be the main issue compared to the cameras.
