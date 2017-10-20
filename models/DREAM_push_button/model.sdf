@@ -79,8 +79,8 @@
         <surface>
           <friction>
             <ode>
-              <mu>1</mu>
-              <mu2>1</mu2>
+              <mu>10</mu>
+              <mu2>10</mu2>
             </ode>
           </friction>
         </surface>
@@ -115,7 +115,9 @@
         </axis>
     </joint>
 
-    <plugin name="push_button" filename="libDREAM_button_spring.so"/>
+    <plugin name="push_button" filename="libDREAM_button_spring.so">
+      <k>10</k>
+    </plugin>
     <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
 
   </model>
