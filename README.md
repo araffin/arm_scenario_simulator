@@ -50,6 +50,10 @@ An snapshot of head_camera_2 shown. A Gaussian noise has been added to the image
 
 ### Additional objects
 
+#### Button model
+
+3D model of the simple button can be found [here](https://cad.onshape.com/documents/ae99f45d0b7d531fc53417af/w/a76e12f77a4fd2de78f76ef3/e/90bb20227b4c28c7ef5fcd1f)
+
 In addition to this basic setup, the arm_scenario_simulator comes with other objects:
 
 - buttons
