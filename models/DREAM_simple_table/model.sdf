@@ -40,12 +40,12 @@
             <size>1.5 0.75 0.75</size>
           </box>
         </geometry>
-        <!-- <material>
+        <material>
           <script>
             <uri>file://media/materials/scripts/gazebo.material</uri>
             <name>Gazebo/Wood</name>
           </script>
-        </material> -->
+        </material>
         <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>

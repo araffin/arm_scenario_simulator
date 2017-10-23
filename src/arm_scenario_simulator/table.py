@@ -8,8 +8,8 @@ class Table(GazeboObject):
         GazeboObject.__init__(self, name)
         self._pressed = False
 
-    def spawn(self, position, orientation=None, **extra):
-        return GazeboObject.spawn(self, 'DREAM_table', position, orientation, **extra)
+    def spawn(self, position, table_type="DREAM_table", orientation=None, **extra):
+        return GazeboObject.spawn(self, table_type, position, orientation, **extra)
 
     def update_state(self, message):
         self._pressed = message.data == 1

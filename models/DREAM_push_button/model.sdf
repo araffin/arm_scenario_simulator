@@ -115,9 +115,7 @@
         </axis>
     </joint>
 
-    <plugin name="push_button" filename="libDREAM_button_spring.so">
-      <k>10</k>
-    </plugin>
+    <plugin name="push_button" filename="libDREAM_button_spring.so"/>
     <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
 
   </model>
