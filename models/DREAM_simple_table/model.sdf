@@ -1,0 +1,53 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="table">
+    <!-- It is not affected by physics but collide with other objects -->
+    <static>true</static>
+    <link name="link">
+      <!-- Inertia for a cuboid: https://en.wikipedia.org/wiki/List_of_moments_of_inertia -->
+      <!-- <inertial>
+        <mass>5</mass>
+        <inertia>
+          <ixx>0.46875</ixx>
+          <iyy>1.171875</iyy>
+          <izz>1.171875</izz>
+          <ixy>0</ixy>
+          <ixz>0</ixz>
+          <iyz>0</iyz>
+        </inertia>
+      </inertial> -->
+      <collision name="collision">
+        <!-- Offset by half the height of the box -->
+        <pose>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.5 0.75 0.75</size>
+          </box>
+        </geometry>
+        <surface>
+          <friction>
+            <ode>
+              <mu>0.6</mu>
+              <mu2>0.6</mu2>
+            </ode>
+          </friction>
+        </surface>
+      </collision>
+      <visual name="visual">
+        <pose>0 0 0.375 0 0 0</pose>
+        <geometry>
+          <box>
+            <size>1.5 0.75 0.75</size>
+          </box>
+        </geometry>
+        <!-- <material>
+          <script>
+            <uri>file://media/materials/scripts/gazebo.material</uri>
+            <name>Gazebo/Wood</name>
+          </script>
+        </material> -->
+        <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
+      </visual>
+    </link>
+  </model>
+</sdf>
