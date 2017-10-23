@@ -13,7 +13,7 @@ class Button(GazeboObject):
         rospy.Subscriber("/"+name+"/is_pressed", Int8Stamped, self.update_state)
 
     def spawn(self, position, orientation = None, **extra):
-        return GazeboObject.spawn(self, 'DREAM_push_button', position, orientation, **extra)
+        return GazeboObject.spawn(self, 'DREAM_simple_button', position, orientation, **extra)
 
     def update_state(self, message):
         self._pressed = message.data==1

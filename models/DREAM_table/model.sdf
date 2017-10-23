@@ -1,7 +1,8 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="table">
-
+  <!-- It is not affected by physics but collide with other objects -->
+  <static>true</static>
     <link name="table">
       <self_collide>true</self_collide>
       <pose>0 0 0.751 0 0 0</pose>
