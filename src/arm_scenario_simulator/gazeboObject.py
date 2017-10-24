@@ -1,6 +1,9 @@
+from __future__ import division
+
 import os
 import rospkg
 
+import numpy as np
 import rospy
 
 rospack = rospkg.RosPack()
@@ -56,8 +59,10 @@ class GazeboObject:
     delete_model_srv = rospy.ServiceProxy('/gazebo/delete_model', DeleteModel)
     get_model_state_srv = rospy.ServiceProxy('/gazebo/get_model_state', GetModelState)
     set_model_state_srv = rospy.ServiceProxy('/gazebo/set_model_state', SetModelState)
-    colorable_links = [
-        'link']  # this is the base list of colorable links in a model. Specialized classes may override this class attribute to allow the user to change links color
+    # this is the base list of colorable links in a model.
+    # Specialized classes may override this class attribute
+    # to allow the user to change links color
+    colorable_links = ['link']
 
     def __init__(self, gazebo_name):
         self.gazebo_name = gazebo_name
@@ -68,13 +73,13 @@ class GazeboObject:
 
     def make_publishers(self):
         for link in self.colorable_links:
-            self.color_publishers[link] = rospy.Publisher('/' + self.gazebo_name + '/' + link + '/visual/set_color',
-                                                          MaterialColor, queue_size=1)
+            topic = "/{}/{}/visual/set_color".format(self.gazebo_name, link)
+            self.color_publishers[link] = rospy.Publisher(topic, MaterialColor, queue_size=1)
 
     @staticmethod
     def resolve_model_path(model_name):
-        for direc in GazeboObject.models_paths:
-            attempt = os.path.join(direc, model_name)
+        for folder in GazeboObject.models_paths:
+            attempt = os.path.join(folder, model_name)
             if os.path.isdir(attempt): return attempt
         raise Exception(
             'Model directory not found for ' + model_name + '. Searched in the following directories ($GAZEBO_MODEL_PATH) : \n' + (
@@ -107,13 +112,16 @@ class GazeboObject:
                              reference_frame)
         if not (orientation and linear_twist and angular_twist):
             current_state = self.get_state(reference_frame)
-            if not orientation: message.pose.orientation = current_state.pose.orientation
-            if not linear_twist: message.twist.linear = current_state.twist.linear
-            if not angular_twist: message.twist.angular = current_state.twist.angular
+            if not orientation:
+                message.pose.orientation = current_state.pose.orientation
+            if not linear_twist:
+                message.twist.linear = current_state.twist.linear
+            if not angular_twist:
+                message.twist.angular = current_state.twist.angular
         GazeboObject.set_model_state_srv.wait_for_service()
         resp_set = GazeboObject.set_model_state_srv(message)
-        if not resp_set.success: rospy.logerr(
-            "Could not set state of " + self.gazebo_name + " , status : " + resp_set.status_message)
+        if not resp_set.success:
+            rospy.logerr("Could not set state of " + self.gazebo_name + " , status : " + resp_set.status_message)
 
     def get_state(self, reference_frame="world"):
         """GazeboObject.get_state(self, reference_frame="world")
@@ -131,22 +139,18 @@ class GazeboObject:
 
     def set_color(self, rgba, link="link", ambient_coeff=0.7, specular_coeff=0.7):
         rgba = list(rgba)
-        if len(rgba) is 3: rgba += [self.color_range]
+        if len(rgba) == 3:
+            rgba += [self.color_range]
+        rgba[-1] = self.color_range if rgba[-1] is None else rgba[-1]
+        rgba = np.array(rgba) / self.color_range
         r, g, b, a = tuple(rgba)
-        a = self.color_range if a is None else a
         message = MaterialColor()
         message.color_type = [COLOR_TYPE['diffuse'], COLOR_TYPE['ambient'], COLOR_TYPE['specular']]
-        message.color.append(
-            ColorRGBA(r / self.color_range, g / self.color_range, b / self.color_range, a / self.color_range))
-        message.color.append(
-            ColorRGBA(0.7 * r / self.color_range, 0.7 * g / self.color_range, 0.7 * b / self.color_range,
-                      a / self.color_range))
-        message.color.append(
-            ColorRGBA(1 - specular_coeff * (1 - r / self.color_range), 1 - specular_coeff * (1 - g / self.color_range),
-                      1 - specular_coeff * (1 - b / self.color_range), a / self.color_range))
+        message.color.append(ColorRGBA(r, g, b, a))
+        message.color.append(ColorRGBA(ambient_coeff * r, ambient_coeff * g, ambient_coeff * b, a))
+        message.color.append(ColorRGBA(1 - specular_coeff * (1 - r), 1 - specular_coeff * (1 - g), 1 - specular_coeff * (1 - b), a))
         self.color_publishers[link].publish(message)
-        # print("color changed!")
-        # print(message)
+
 
     def set_color_range(self, R):
         self.color_range = float(R)
