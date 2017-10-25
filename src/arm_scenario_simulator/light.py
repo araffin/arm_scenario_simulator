@@ -1,7 +1,11 @@
+from __future__ import division
+
+import numpy as np
+
 import rospy
-from .gazeboObject import GazeboObject
 from std_msgs.msg import ColorRGBA
 from arm_scenario_simulator.msg import MaterialColor
+from .gazeboObject import GazeboObject
 from .parameters import COLOR_TYPE
 
 
@@ -17,18 +21,19 @@ class Light(GazeboObject):
         self._on = False
         if color:
             self.set_color(color)
-        self._send_color_cmd(
-            Light.off_color)  # This is of course useful only if the python object is being asociated with an already spawend model. Otherwise, it just does nothing
+        # This is of course useful only if the python object is being asociated
+        # with an already spawed model. Otherwise, it just does nothing
+        self._send_color_cmd(Light.off_color)
 
-    def spawn(self, shape, position, orientation=None, **extra):
-        return GazeboObject.spawn(self, Light.types[shape], position, orientation, **extra)
+    def spawn(self, shape, position, orientation=None, **kwargs):
+        return GazeboObject.spawn(self, Light.types[shape], position, orientation, **kwargs)
 
     def set_color(self, color, **kwargs):
         if len(color) is 3:
             color += [self.color_range]
         previous_color = self.color
-        self.color = ColorRGBA(color[0] / self.color_range, color[1] / self.color_range, color[2] / self.color_range,
-                               color[3] / self.color_range)
+        color = np.array(color) / self.color_range
+        self.color = ColorRGBA(color[0], color[1], color[2], color[3])
         if self.color != previous_color and self._on:
             self._send_color_cmd(self.color)
 
