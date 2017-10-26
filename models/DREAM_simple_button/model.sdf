@@ -5,11 +5,11 @@
     <link name="base">
       <pose>0 0 0.0 0 0 0</pose>
       <inertial>
-        <mass>1</mass>
+        <mass>5</mass>
         <inertia>
-          <ixx>0.002502083</ixx>
-          <iyy>0.002502083</iyy>
-          <izz>0.005</izz>
+          <ixx>0.0500104166667</ixx>
+          <iyy>0.0500104166667</iyy>
+          <izz>0.1</izz>
           <ixy>0</ixy>
           <ixz>0</ixz>
           <iyz>0</iyz>
@@ -45,16 +45,15 @@
         <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>
-
     <link name="cylinder">
       <!-- Offset by the height of the base -->
       <pose>0 0 0.005 0 0 0</pose>
       <inertial>
-        <mass>1</mass>
+        <mass>5</mass>
         <inertia>
-          <ixx>0.003777083</ixx>
-          <iyy>0.003777083</iyy>
-          <izz>0.00745</izz>
+          <ixx>0.275260416667</ixx>
+          <iyy>0.275260416667</iyy>
+          <izz>0.181</izz>
           <ixy>0</ixy>
           <ixz>0</ixz>
           <iyz>0</iyz>
@@ -97,14 +96,15 @@
       <inertial>
         <mass>0.1</mass>
         <inertia>
-          <ixx>0.0001277083</ixx>
-          <iyy>0.0001277083</iyy>
-          <izz>0.000245</izz>
+          <ixx>0.0008175</ixx>
+          <iyy>0.0008175</iyy>
+          <izz>0.00162</izz>
           <ixy>0</ixy>
           <ixz>0</ixz>
           <iyz>0</iyz>
         </inertia>
       </inertial>
+
       <collision name="button_collision">
         <geometry>
           <mesh>
@@ -159,7 +159,8 @@
       </axis>
     </joint>
 
-  <plugin name="push_button" filename="libDREAM_button_spring.so"/>
-  <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
+    <plugin name="push_button" filename="libDREAM_button_spring.so"/>
+    <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
+    <plugin name="mesh_box" filename="libDREAM_mesh_box.so"/>
   </model>
 </sdf>
