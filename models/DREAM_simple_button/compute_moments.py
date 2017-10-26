@@ -54,7 +54,7 @@ for name, moments, mass in elements:
 
     for idx, e in enumerate(['ixx', 'iyy', 'izz']):
         elem = etree.Element(e)
-        elem.text = str(moments[idx])
+        elem.text = "{:.10f}".format(moments[idx])
         inertia.append(elem)
 
     for e in ['ixy', 'ixz', 'iyz']:

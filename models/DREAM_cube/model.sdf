@@ -1,7 +1,7 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="Cube">
-  <pose>0 0 0.025 0 0 0</pose>
+  <pose>0 0 0.0175 0 0 0</pose>
     <link name="link">
       <inertial>
         <mass>0.3</mass>
@@ -30,5 +30,6 @@
         <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>
+    <plugin name="mesh_box" filename="libDREAM_mesh_box.so"/>
   </model>
 </sdf>

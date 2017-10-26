@@ -76,21 +76,22 @@ class Environment:
             """
             return random.random() * 2 * limit - limit
 
+        z_above_table = 0.8 # with a safety margin
         self.addObject(arm_sim.Table('table1').spawn(Point(x=0.6, y=0, z=0),
                                                      orientation=axisToQuaternion([0, 0, 1], -1.570796),
                                                      static=False,
                                                      table_type="DREAM_table"))
 
-        self.addObject(arm_sim.GazeboObject('cube1').spawn('DREAM_cube', Point(x=0.4 + r(0.2), y=r(0.4), z=0.78)))
-        self.addObject(arm_sim.GazeboObject('cube2').spawn('DREAM_cube', Point(x=0.5 + r(0.2), y=r(0.2), z=0.78)))
+        self.addObject(arm_sim.GazeboObject('cube1').spawn('DREAM_cube', Point(x=0.4 + r(0.2), y=r(0.4), z=z_above_table)))
+        self.addObject(arm_sim.GazeboObject('cube2').spawn('DREAM_cube', Point(x=0.5 + r(0.2), y=r(0.2), z=z_above_table)))
         self.addObject(
-            arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder', Point(x=0.5 + r(0.2), y=r(0.2), z=0.79)))
+            arm_sim.GazeboObject('cylinder1').spawn('DREAM_cylinder', Point(x=0.5 + r(0.2), y=r(0.2), z=z_above_table)))
         self.addObject(
-            arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder', Point(x=0.5 + r(0.2), y=r(0.2), z=0.79)))
+            arm_sim.GazeboObject('cylinder2').spawn('DREAM_cylinder', Point(x=0.5 + r(0.2), y=r(0.2), z=z_above_table)))
 
         # deterministic
-        self.addObject(arm_sim.Button('button1').spawn(Point(x=0.6, y=0.30, z=0.77), button_type="DREAM_simple_button"))
-        self.addObject(arm_sim.Lever('lever1').spawn(Point(x=0.5, y=0.1, z=0.78),
+        self.addObject(arm_sim.Button('button1').spawn(Point(x=0.6, y=0.30, z=z_above_table), button_type="DREAM_simple_button"))
+        self.addObject(arm_sim.Lever('lever1').spawn(Point(x=0.5, y=0.1, z=z_above_table),
                                                      orientation=axisToQuaternion([0, 0, 1], math.pi / 4)))
 
         # the following objects are not spawn, cause already present in the world before this script is run

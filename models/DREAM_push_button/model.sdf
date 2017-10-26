@@ -117,6 +117,7 @@
 
     <plugin name="push_button" filename="libDREAM_button_spring.so"/>
     <plugin name="sensor" filename="libDREAM_button_sensor.so"/>
+    <plugin name="mesh_box" filename="libDREAM_mesh_box.so"/>
 
   </model>
 </sdf>

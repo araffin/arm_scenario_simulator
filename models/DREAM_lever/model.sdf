@@ -40,8 +40,6 @@
       </visual>
     </link>
 
-
-
     <link name="lever">
       <pose>0 0 0.015 0 0 0</pose>
       <inertial>
@@ -80,8 +78,6 @@
       </visual>
     </link>
 
-
-
     <joint name="pivot" type="revolute">
         <pose>0 0 0 0 0 0</pose>
         <child>lever</child>
@@ -96,6 +92,7 @@
     </joint>
 
     <plugin name="sensor" filename="libDREAM_lever_sensor.so"/>
+    <plugin name="mesh_box" filename="libDREAM_mesh_box.so"/>
 
   </model>
 </sdf>

@@ -1,10 +1,11 @@
 <?xml version='1.0'?>
 <sdf version="1.4">
 <model name="Cylinder">
-  <pose>0 0 0.025 0 0 0</pose>
+  <pose>0 0 0.03 0 0 0</pose>
     <link name="link">
       <inertial>
         <mass>0.3</mass>
+        <!-- Inertia seems not to be the good one -->
         <inertia>
           <ixx>0.0004</ixx>
           <ixy>0.0</ixy>
@@ -32,5 +33,6 @@
         <plugin name="color_plugin" filename="libDREAM_change_color.so"/>
       </visual>
     </link>
+    <plugin name="mesh_box" filename="libDREAM_mesh_box.so"/>
   </model>
 </sdf>
