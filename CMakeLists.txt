@@ -127,6 +127,7 @@ add_subdirectory(models/DREAM_table/plugins)
 add_subdirectory(models/DREAM_lever/plugins)
 add_subdirectory(models/DREAM_push_button/plugins)
 add_subdirectory(models/DREAM_light_round/plugins)
+add_subdirectory(models/plugins)
 
 ## Declare a C++ library
 # add_library(dream_scenario
