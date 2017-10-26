@@ -6,9 +6,9 @@ from arm_scenario_simulator.msg import Int8Stamped
 class Button(GazeboObject):
 
     def __init__(self, name):
+        self.colorable_links = ['base', 'button']
         GazeboObject.__init__(self, name)
         self._pressed = False
-        self.colorable_links = ['base', 'button']
         rospy.Subscriber("/" + name + "/is_pressed", Int8Stamped, self.update_state)
 
     def spawn(self, position, button_type="DREAM_push_button", orientation=None, **kwargs):

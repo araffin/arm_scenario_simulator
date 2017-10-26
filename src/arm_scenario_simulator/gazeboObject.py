@@ -35,7 +35,7 @@ def spawn_sdf(gazebo_name, path_to_sdf, position, orientation, static):
         resp_spawn = GazeboObject.spawn_sdf_srv(gazebo_name, xml, "/", Pose(position=position, orientation=orientation),
                                                 "world")
         if resp_spawn.success:
-            rospy.loginfo("creation of " + gazebo_name + " successful")
+            rospy.loginfo("Creation of " + gazebo_name + " successful")
             return True
         else:
             rospy.logerr(
@@ -103,8 +103,7 @@ class GazeboObject:
             pass  # Don't know why, but an exception is raised by ROS whereas the deletion is actually successful ... So ignore the exception
 
     def set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world"):
-        """GazeboObject.set_state(self, position, orientation=None, linear_twist=None, angular_twist=None, reference_frame="world")
-
+        """
         Set the state (pose + twist) of the objects according to the given reference_frame
         If an element is omitted, the current value is conserved.
         """
@@ -112,20 +111,24 @@ class GazeboObject:
                              reference_frame)
         if not (orientation and linear_twist and angular_twist):
             current_state = self.get_state(reference_frame)
+
             if not orientation:
                 message.pose.orientation = current_state.pose.orientation
+
             if not linear_twist:
                 message.twist.linear = current_state.twist.linear
+
             if not angular_twist:
                 message.twist.angular = current_state.twist.angular
+
         GazeboObject.set_model_state_srv.wait_for_service()
         resp_set = GazeboObject.set_model_state_srv(message)
+
         if not resp_set.success:
             rospy.logerr("Could not set state of " + self.gazebo_name + " , status : " + resp_set.status_message)
 
     def get_state(self, reference_frame="world"):
-        """GazeboObject.get_state(self, reference_frame="world")
-
+        """
         Retrieves the state (pose + twist) of the objects according to the given reference_frame
         A pose is made of a position and orintation.
         A twist is made of a linear twist and angular twist.

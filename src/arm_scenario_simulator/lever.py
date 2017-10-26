@@ -5,9 +5,9 @@ from .gazeboObject import GazeboObject
 
 
 class Lever(GazeboObject):
-    colorable_links = ['base', 'lever']
 
     def __init__(self, name):
+        self.colorable_links = ['base', 'lever']
         GazeboObject.__init__(self, name)
         self._pushed = None
         rospy.Subscriber("/" + name + "/is_pushed", Int8Stamped, self.update_state)
